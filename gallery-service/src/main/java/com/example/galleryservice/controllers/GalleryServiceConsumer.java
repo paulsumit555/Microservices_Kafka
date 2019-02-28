@@ -20,10 +20,10 @@ public class GalleryServiceConsumer {
 
     private KafkaConsumer<String, String> kafkaConsumer;
 
-    public GalleryServiceConsumer(String theTechCheckTopicName, Properties consumerProperties) {
+    public GalleryServiceConsumer(String galleryTopic, Properties consumerProperties) {
 
         kafkaConsumer = new KafkaConsumer<>(consumerProperties);
-       kafkaConsumer.subscribe(Arrays.asList(theTechCheckTopicName));
+       kafkaConsumer.subscribe(Arrays.asList(galleryTopic));
     }
 
     /**

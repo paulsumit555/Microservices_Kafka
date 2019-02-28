@@ -35,8 +35,8 @@ public class StudentController {
 	@Value("${kafka.bootstrap.servers}")
 	private String kafkaBootstrapServers;
 
-	@Value("${kafka.topic.thetechcheck}")
-	private String theTechCheckTopicName;
+	@Value("${kafka.topic.image}")
+	private String imageTopic;
 	
 	@Value("${kafka.topic.gallery}")
 	private String galleryTopic;
@@ -92,6 +92,7 @@ public class StudentController {
 
 		
 		processComsumer(producerProperties);
+		
 		/*
 		 * Creating a Kafka Producer object with the configuration above.
 		 */
@@ -164,7 +165,7 @@ public class StudentController {
         You can use any JSON library for this, just make sure it serializes your objects properly.
         A popular alternative to the one I've used is Gson.
          */
-		producer.send(new ProducerRecord<>(theTechCheckTopicName, payload));
+		producer.send(new ProducerRecord<>(imageTopic, payload));
 	}
 
 	public Gallery callMovieDetailsFallBack(int id) {

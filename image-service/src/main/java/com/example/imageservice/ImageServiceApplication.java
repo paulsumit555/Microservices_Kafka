@@ -12,8 +12,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class ImageServiceApplication implements CommandLineRunner{
 	
-	@Value("${kafka.topic.thetechcheck}")
-    private String theTechCheckTopicName;
+	@Value("${kafka.topic.image}")
+    private String imageTopicName;
 
     @Value("${kafka.bootstrap.servers}")
     private String kafkaBootstrapServers;
@@ -23,6 +23,9 @@ public class ImageServiceApplication implements CommandLineRunner{
 
     @Value("${zookeeper.host}")
     String zookeeperHost;
+    
+    @Value("${kafka.topic.gallery}")
+    private String galleryTopic;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ImageServiceApplication.class, args);
@@ -50,14 +53,14 @@ public class ImageServiceApplication implements CommandLineRunner{
     	consumerProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
     	
     	Properties propertiesForProducer = propertiesForProducer();
-		
+		System.out.println("GalleryTopic :-"+galleryTopic +"  "+kafkaBootstrapServers +" "+zookeeperGroupId);
 		/*
     	 * Creating a thread to listen to the kafka topic
     	 */
     	Thread kafkaConsumerThread = new Thread(() -> {
 
     	    ImageServiceConsumer simpleKafkaConsumer = new ImageServiceConsumer(
-    	    		theTechCheckTopicName,
+    	    		imageTopicName,galleryTopic,
     	            consumerProperties,propertiesForProducer
     	    );
 

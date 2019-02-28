@@ -24,16 +24,17 @@ public class ImageServiceConsumer {
     private KafkaProducer<String, String> producer;
     
 	@Value("${kafka.topic.gallery.thetechcheck}")
-	private static String galleryTopic;
+	private String galleryTopic;
     
 	@Autowired
 	Environment environment;
 
-    public ImageServiceConsumer(String imageTopic, Properties consumerProperties,Properties producerProperties) {
+    public ImageServiceConsumer(String imageTopic,String galleryTopic, Properties consumerProperties,Properties producerProperties) {
 
         kafkaConsumer = new KafkaConsumer<>(consumerProperties);
         kafkaConsumer.subscribe(Arrays.asList(imageTopic));
         producer = new KafkaProducer<>(producerProperties);
+        this.galleryTopic=galleryTopic;
     }
 
     /**
@@ -83,7 +84,7 @@ public class ImageServiceConsumer {
                 	
                 }
                 
-               producer.send(new ProducerRecord<>("gallery", images.toString()));
+               producer.send(new ProducerRecord<>(galleryTopic, images.toString()));
             }
         }
     }
